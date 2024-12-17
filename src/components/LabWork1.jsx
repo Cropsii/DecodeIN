@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
-import { evaluate } from "mathjs";
-import "./labwork1.css"; // импортируем файл стилей
-import SecondTable from "./SecondTable";
+import "./labwork1.css"; // Импорт стилей
+import { Button, TextField, Box } from "@mui/material"; // Импортируем Button и другие компоненты из Material UI
 
 const Labwork1 = () => {
   const [text, setText] = useState("");
@@ -14,83 +13,113 @@ const Labwork1 = () => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (event) => {
-        setText(event.target.result);
-      };
-      reader.readAsText(file, "utf-8"); // читаем файл как текст в кодировке utf-8
+      reader.onload = (event) => setText(event.target.result);
+      reader.readAsText(file, "utf-8");
     }
   };
 
-  const handleGenerateTable = () => {
+  const calculateTable = () => {
     if (!text) {
       alert("Пожалуйста, загрузите файл с текстом.");
       return;
     }
 
-    const lowerCaseText = text.toLowerCase(); // Переводим текст в нижний регистр
+    const lowerCaseText = text.toLowerCase();
     const symbols = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789.,:;- (".split(
       ""
     );
-    const symbolCounts = symbols.map((symbol) => ({
-      symbol,
-      count: lowerCaseText.split(symbol).length - 1,
-    }));
+    const symbolCounts = symbols.reduce((acc, symbol) => {
+      const count = lowerCaseText.split(symbol).length - 1;
+      acc.push({ symbol, count });
+      return acc;
+    }, []);
 
-    const totalSymbols = symbolCounts.reduce(
-      (sum, item) => sum + item.count,
-      0
-    );
-    setTotalSymbols(totalSymbols);
+    const total = symbolCounts.reduce((sum, item) => sum + item.count, 0);
+    setTotalSymbols(total);
 
-    const tableData = symbolCounts.map((item) => ({
-      ...item,
-      code: item.symbol.charCodeAt(0),
-      probability: item.count / totalSymbols,
-      ii: item.count > 0 ? -Math.log2(item.count / totalSymbols) : 0,
-    }));
+    const tableData = symbolCounts.map((item) => {
+      const probability = item.count / total;
+      return {
+        ...item,
+        code: item.symbol.charCodeAt(0),
+        probability,
+        ii: item.count > 0 ? -Math.log2(probability) : 0,
+      };
+    });
 
-    // Вычисление энтропии по указанной формуле
-    const entropySum = tableData.reduce(
-      (acc, item) =>
-        acc +
+    const entropy = tableData.reduce((sum, item) => {
+      return (
+        sum +
         (item.probability > 0
           ? item.probability * -Math.log2(item.probability)
-          : 0),
-      0
-    );
+          : 0)
+      );
+    }, 0);
 
-    const entropyValue = entropySum;
-    setEntropyValue(entropyValue);
-
+    setEntropyValue(entropy);
     setTable(tableData);
   };
 
   const handleSaveTable = () => {
     if (!table) {
-      alert(
-        "Таблица не сгенерирована. Сначала нажмите 'Сгенерировать таблицу'."
-      );
+      alert("Таблица не сгенерирована.");
       return;
     }
 
     const ws = XLSX.utils.json_to_sheet(table);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    XLSX.utils.book_append_sheet(wb, ws, "SymbolsTable");
     XLSX.writeFile(wb, "lab_work_1_table.xlsx");
   };
+
+  // Вторичная таблица (ASCII и Хартли)
+  const asciiBits = 8;
+  const hartleyBits = Math.log2(totalSymbols || 1);
+  const asciiAbsoluteRedundancy = asciiBits - entropyValue;
+  const hartleyAbsoluteRedundancy = hartleyBits - entropyValue;
+
+  const secondTableData = [
+    {
+      type: "Стандартный код ASCII",
+      uncertainty: asciiBits,
+      codeLength: asciiBits,
+      absoluteRedundancy: asciiAbsoluteRedundancy,
+      relativeRedundancy: asciiAbsoluteRedundancy / asciiBits,
+    },
+    {
+      type: "Код по Хартли",
+      uncertainty: hartleyBits,
+      codeLength: hartleyBits,
+      absoluteRedundancy: hartleyAbsoluteRedundancy,
+      relativeRedundancy: hartleyAbsoluteRedundancy / hartleyBits,
+    },
+  ];
 
   return (
     <main>
       <h1>Лабораторная работа №1</h1>
-      <input
-        type="file"
-        accept=".txt"
-        onChange={handleFileChange}
-        className="file-input"
-        id="file-input"
-      />
-      <button onClick={handleGenerateTable}>Сгенерировать таблицу</button>
-      <button onClick={handleSaveTable}>Сохранить таблицу</button>
+      <div className="file-input-wrapper">
+        <Box>
+          {/* Используем TextField для стилизации input */}
+          <TextField
+            variant="outlined"
+            type="file"
+            onChange={handleFileChange}
+            sx={{
+              backgroundColor: "#ffff",
+              borderRadius: "10px",
+            }}
+          />
+        </Box>
+      </div>
+
+      {/* Кнопка с использованием Material UI */}
+      <Button variant="contained" color="primary" onClick={calculateTable}>
+        Сгенерировать таблицу
+      </Button>
+      <Button variant="contained" color="secondary" onClick={handleSaveTable}>
+        Сохранить таблицу
+      </Button>
 
       {table && (
         <>
@@ -100,8 +129,8 @@ const Labwork1 = () => {
                 <th>№</th>
                 <th>Символ</th>
                 <th>Код символа</th>
-                <th>Число вхождений символа в текст</th>
-                <th>Вероятность вхождения символа (pi)</th>
+                <th>Число вхождений</th>
+                <th>Вероятность (pi)</th>
                 <th>Ii</th>
               </tr>
             </thead>
@@ -112,32 +141,46 @@ const Labwork1 = () => {
                   <td>{row.symbol}</td>
                   <td>{row.code}</td>
                   <td>{row.count}</td>
-                  <td>{row.probability ? row.probability.toFixed(4) : ""}</td>
-                  <td>{row.ii ? row.ii.toFixed(4) : ""}</td>
+                  <td>{row.probability.toFixed(4)}</td>
+                  <td>{row.ii.toFixed(4)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
           <div className="Info">
             <p>
-              <strong>Всего символов в тексте:</strong>{" "}
-              <span className="InfoNums"> {totalSymbols}</span>
+              <strong>Всего символов:</strong> {totalSymbols}
             </p>
             <p>
-              <strong>Полная вероятность:</strong>{" "}
-              <span className="InfoNums">1</span>
-            </p>
-            <p>
-              <strong>Энтропия источника:</strong>{" "}
-              <span className="InfoNums">{entropyValue}</span>
+              <strong>Энтропия источника:</strong> {entropyValue.toFixed(4)}
             </p>
           </div>
+
+          <h2>Сравнение кодировок</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Тип кодирования</th>
+                <th>Неопределенность</th>
+                <th>Разрядность кода</th>
+                <th>Абсолютная избыточность</th>
+                <th>Относительная избыточность</th>
+              </tr>
+            </thead>
+            <tbody>
+              {secondTableData.map((row, index) => (
+                <tr key={index}>
+                  <td>{row.type}</td>
+                  <td>{row.uncertainty.toFixed(4)}</td>
+                  <td>{row.codeLength.toFixed(4)}</td>
+                  <td>{row.absoluteRedundancy.toFixed(4)}</td>
+                  <td>{row.relativeRedundancy.toFixed(4)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </>
       )}
-      <SecondTable
-        totalSymbols={totalSymbols}
-        entropyValue={entropyValue}
-      ></SecondTable>
     </main>
   );
 };
