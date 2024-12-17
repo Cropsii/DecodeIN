@@ -1,32 +1,33 @@
 // src/SecondTable.js
 import React from 'react';
 
-const SecondTable = ({ tableData, entropy }) => {
-  const totalSymbols = tableData.reduce((sum, item) => sum + item.count, 0);
-  const hartleyMeasure = Math.log2(symbols.length);
-  const asciiCodeLength = 8; // ASCII код имеет длину 8 бит
+const SecondTable = ({ totalSymbols, entropyValue }) => {
+  const asciiBits = 8; // Разрядность кода ASCII
+  const hartleyBits = Math.log2(totalSymbols); // Разрядность кода Хартли
 
-  const uncertaintyAscii = asciiCodeLength;
-  const codeLengthHartley = hartleyMeasure;
-  const absoluteRedundancyAscii = asciiCodeLength - entropy;
-  const relativeRedundancyAscii = absoluteRedundancyAscii / asciiCodeLength;
-  const absoluteRedundancyHartley = hartleyMeasure - entropy;
-  const relativeRedundancyHartley = absoluteRedundancyHartley / hartleyMeasure;
+  const asciiUncertainty = asciiBits;
+  const hartleyUncertainty = hartleyBits;
 
-  const secondTableData = [
+  const asciiAbsoluteRedundancy = asciiBits - entropyValue;
+  const hartleyAbsoluteRedundancy = hartleyBits - entropyValue;
+
+  const asciiRelativeRedundancy = asciiAbsoluteRedundancy / asciiBits;
+  const hartleyRelativeRedundancy = hartleyAbsoluteRedundancy / hartleyBits;
+
+  const data = [
     {
       type: 'При кодировании сообщения стандартной кодовой таблицей ASCII',
-      uncertainty: uncertaintyAscii,
-      codeLength: asciiCodeLength,
-      absoluteRedundancy: absoluteRedundancyAscii,
-      relativeRedundancy: relativeRedundancyAscii
+      uncertainty: asciiUncertainty,
+      codeLength: asciiBits,
+      absoluteRedundancy: asciiAbsoluteRedundancy,
+      relativeRedundancy: asciiRelativeRedundancy
     },
     {
       type: 'При использовании равномерного кода, построенного на основе меры Хартли',
-      uncertainty: entropy,
-      codeLength: codeLengthHartley,
-      absoluteRedundancy: absoluteRedundancyHartley,
-      relativeRedundancy: relativeRedundancyHartley
+      uncertainty: hartleyUncertainty,
+      codeLength: hartleyBits,
+      absoluteRedundancy: hartleyAbsoluteRedundancy,
+      relativeRedundancy: hartleyRelativeRedundancy
     }
   ];
 
@@ -42,7 +43,7 @@ const SecondTable = ({ tableData, entropy }) => {
         </tr>
       </thead>
       <tbody>
-        {secondTableData.map((row, index) => (
+        {data.map((row, index) => (
           <tr key={index}>
             <td>{row.type}</td>
             <td>{row.uncertainty.toFixed(4)}</td>

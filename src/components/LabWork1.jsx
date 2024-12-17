@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import { evaluate } from "mathjs";
 import "./labwork1.css"; // импортируем файл стилей
+import SecondTable from "./SecondTable";
 
 const Labwork1 = () => {
   const [text, setText] = useState("");
@@ -62,18 +63,35 @@ const Labwork1 = () => {
     setEntropyValue(entropyValue);
 
     setTable(tableData);
+  };
 
-    const ws = XLSX.utils.json_to_sheet(tableData);
+  const handleSaveTable = () => {
+    if (!table) {
+      alert(
+        "Таблица не сгенерирована. Сначала нажмите 'Сгенерировать таблицу'."
+      );
+      return;
+    }
+
+    const ws = XLSX.utils.json_to_sheet(table);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
     XLSX.writeFile(wb, "lab_work_1_table.xlsx");
   };
 
   return (
-    <div>
+    <main>
       <h1>Лабораторная работа №1</h1>
-      <input type="file" accept=".txt" onChange={handleFileChange} />
+      <input
+        type="file"
+        accept=".txt"
+        onChange={handleFileChange}
+        className="file-input"
+        id="file-input"
+      />
       <button onClick={handleGenerateTable}>Сгенерировать таблицу</button>
+      <button onClick={handleSaveTable}>Сохранить таблицу</button>
+
       {table && (
         <>
           <table>
@@ -100,12 +118,27 @@ const Labwork1 = () => {
               ))}
             </tbody>
           </table>
-          <p><strong>Всего символов в тексте:</strong> {totalSymbols}</p>
-          <p><strong>Полная вероятность:</strong> 1</p>
-          <p><strong>Энтропия источника:</strong> {entropyValue}</p>
+          <div className="Info">
+            <p>
+              <strong>Всего символов в тексте:</strong>{" "}
+              <span className="InfoNums"> {totalSymbols}</span>
+            </p>
+            <p>
+              <strong>Полная вероятность:</strong>{" "}
+              <span className="InfoNums">1</span>
+            </p>
+            <p>
+              <strong>Энтропия источника:</strong>{" "}
+              <span className="InfoNums">{entropyValue}</span>
+            </p>
+          </div>
         </>
       )}
-    </div>
+      <SecondTable
+        totalSymbols={totalSymbols}
+        entropyValue={entropyValue}
+      ></SecondTable>
+    </main>
   );
 };
 
