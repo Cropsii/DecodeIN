@@ -52,7 +52,7 @@ const ShannonFanoCoding = ({ initialTable }) => {
   console.log(sortedTable);
 
   return (
-    <div>
+    <div className="ShanonFanoWrap">
       <h2>Кодирование Шеннона-Фано</h2>
       <table>
         <thead>

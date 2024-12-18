@@ -43,7 +43,7 @@ h1 {
 }
 
 button {
-  width: fit-content;
+  /* width: fit-content; */
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -54,7 +54,7 @@ button {
   cursor: pointer;
   transition: ease-in-out 0.25s;
 }
-.WrapButton{
+.WrapButton {
   display: flex;
   gap: 1rem;
 }
@@ -80,7 +80,7 @@ tr:hover {
   background: #1a1a1a;
   border-radius: 20px;
 }
-.Info:hover{
+.Info:hover {
   scale: 1.08;
 }
 .InfoNums {
@@ -140,26 +140,49 @@ td {
 th {
   background-color: #372652;
 }
-span{
+span {
   font-size: larger;
   font-weight: bolder;
   color: #747bff;
 }
-.DecodeWrap{
-  background: #1a1a1a66;
-  color: white;
-  padding: 1rem;
+.ShanonFanoWrap {
   display: flex;
-  align-self: center;
   flex-direction: column;
-  justify-content: center;
+  gap: 1rem;
 }
-.encodedText{
-  background: #372652;
+.DecodeWrap {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  gap: 1rem;
+  margin: auto;
   padding: 1rem;
-  width: fit-content;
+  background: #1a1a1a3e;
   border-radius: 10px;
 }
+
+.encodedInput {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  padding: 10px;
+  border-radius: 5px;
+  background: #37265295;
+}
+
+.encodedText {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.encodedText:hover {
+  background-color: #0056b3;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

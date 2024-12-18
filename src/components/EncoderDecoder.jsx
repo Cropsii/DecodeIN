@@ -54,7 +54,7 @@ const EncoderDecoder = ({ codes }) => {
       <h2>Кодировщик и Декодировщик</h2>
 
       <div>
-        <label>Введите текст для кодирования:</label>
+        <label>Введите текст для кодирования: </label>
         <input
           type="text"
           value={inputText}
@@ -63,32 +63,28 @@ const EncoderDecoder = ({ codes }) => {
         />
         <div>
           <h3>Закодированное сообщение:</h3>
-          <p>
-            <button
-              className="encodedText"
-              onClick={() => copyToClipboard(encodeMessage(inputText))}
-            >
-              {encodeMessage(inputText)} 📄
-            </button>
-          </p>
+          <p className="encodedInput">{encodeMessage(inputText)}</p>
         </div>
       </div>
+      <button onClick={() => copyToClipboard(encodeMessage(inputText))}>
+        Скопировать 📄
+      </button>
 
       <div>
-        <label>Введите текст для декодирования:</label>
+        <label>Введите текст для декодирования: </label>
         <input
           type="text"
           value={decodeInput}
           onChange={(e) => setDecodeInput(e.target.value)}
           placeholder="Введите закодированный текст"
         />
-        <button onClick={handleDecode}>Декодировать</button>
       </div>
+      <button onClick={handleDecode}>Декодировать 🪄</button>
 
       {decodedText && (
         <div>
           <h3>Декодированное сообщение:</h3>
-          <p>{decodedText}</p>
+          <p className="encodedInput">{decodedText}</p>
         </div>
       )}
     </div>
