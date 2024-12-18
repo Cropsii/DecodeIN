@@ -51,13 +51,25 @@ const ShannonFanoCoding = ({ initialTable }) => {
   const codes = assignCodes(sortedTable);
   console.log(sortedTable);
 
+  // Функция для расчета средней длины кодов
   const calculateAverageCodeLength = (symbols, codes) => {
     return symbols.reduce(
       (sum, symbol) => sum + codes[symbol.symbol].length * symbol.probability,
       0
     );
   };
+
+  // Функция для расчета энтропии
+  const calculateEntropy = (symbols) => {
+    return symbols.reduce(
+      (sum, symbol) => sum - symbol.probability * Math.log2(symbol.probability),
+      0
+    );
+  };
+
   const averageCodeLength = calculateAverageCodeLength(sortedTable, codes);
+  const entropy = calculateEntropy(sortedTable);
+
   return (
     <div className="ShanonFanoWrap">
       <h2>Кодирование Шеннона-Фано</h2>
@@ -81,10 +93,15 @@ const ShannonFanoCoding = ({ initialTable }) => {
           ))}
         </tbody>
       </table>
-      <p>
-        <strong>Средняя длина кодов:</strong> {averageCodeLength.toFixed(4)} бит
-      </p>
-      <EncoderDecoder codes={codes}></EncoderDecoder>
+      <div className="Info">
+        <p>
+          <strong>Средняя длина кодов:</strong> <span>{averageCodeLength.toFixed(4)} бит</span>
+        </p>
+        <p>
+          <strong>Энтропия:</strong> <span>{entropy.toFixed(4)} бит</span>
+        </p>
+      </div>
+      <EncoderDecoder codes={codes} Name={"Шеннона-Фано"}></EncoderDecoder>
     </div>
   );
 };

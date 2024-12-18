@@ -103,7 +103,7 @@ const Labwork1 = () => {
               type="file"
               onChange={handleFileChange}
               sx={{
-                width:"fit-content",
+                width: "fit-content",
                 backgroundColor: "#ffff",
                 borderRadius: "10px",
               }}
@@ -122,7 +122,7 @@ const Labwork1 = () => {
           <table>
             <thead>
               <tr>
-                <th>№</th>
+                <th style={{ textAlign: "center" }}>№</th>
                 <th>Символ</th>
                 <th>Код символа</th>
                 <th>Число вхождений</th>
@@ -133,7 +133,7 @@ const Labwork1 = () => {
             <tbody>
               {table.map((row, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  <td style={{ textAlign: "center" }}>{index + 1}</td>
                   <td>{row.symbol}</td>
                   <td>{row.code}</td>
                   <td>{row.count}</td>
@@ -176,8 +176,10 @@ const Labwork1 = () => {
               ))}
             </tbody>
           </table>
-          <ShannonFanoCoding initialTable={table} />
-          <HuffmanCoding initialTable={table}></HuffmanCoding>
+          <div className="TableWrap">
+            <ShannonFanoCoding initialTable={table} />
+            <HuffmanCoding initialTable={table}></HuffmanCoding>
+          </div>
         </>
       )}
     </main>

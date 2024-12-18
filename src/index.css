@@ -147,8 +147,18 @@ span {
 }
 .ShanonFanoWrap ,.HuffmanWrap {
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 1rem;
+}
+.ChoseTable{
+  display: flex;
+  justify-content: space-between;
+}
+.TableWrap{
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
 }
 .DecodeWrap {
   display: flex;

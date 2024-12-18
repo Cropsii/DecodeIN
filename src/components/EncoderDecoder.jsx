@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const EncoderDecoder = ({ codes }) => {
+const EncoderDecoder = ({ codes,Name }) => {
   const [inputText, setInputText] = useState("");
   const [decodeInput, setDecodeInput] = useState("");
   const [decodedText, setDecodedText] = useState("");
@@ -51,7 +51,7 @@ const EncoderDecoder = ({ codes }) => {
 
   return (
     <div className="DecodeWrap">
-      <h2>Кодировщик и Декодировщик</h2>
+      <h2>Кодирование {Name}</h2>
 
       <div>
         <label>Введите текст для кодирования: </label>

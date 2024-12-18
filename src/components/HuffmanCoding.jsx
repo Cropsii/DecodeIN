@@ -52,17 +52,24 @@ const HuffmanCoding = ({ initialTable }) => {
   // Вычисление средней длины кодов
   const calculateAverageCodeLength = (symbols, codes) => {
     return symbols.reduce(
-      (sum, symbol) =>
-        sum + codes[symbol.symbol].length * symbol.probability,
+      (sum, symbol) => sum + codes[symbol.symbol].length * symbol.probability,
       0
     );
   };
+  // Функция для расчета энтропии
+  const calculateEntropy = (symbols) => {
+    return symbols.reduce(
+      (sum, symbol) => sum - symbol.probability * Math.log2(symbol.probability),
+      0
+    );
+  };
+  const entropy = calculateEntropy(sortedTable);
 
   // Построение дерева и генерация кодов
   const huffmanTree = buildTree(sortedTable);
   const codes = generateCodes(huffmanTree);
   const averageCodeLength = calculateAverageCodeLength(sortedTable, codes);
-
+  console.log(codes);
   return (
     <div className="HuffmanWrap">
       <h2>Кодирование Хаффмана</h2>
@@ -86,10 +93,15 @@ const HuffmanCoding = ({ initialTable }) => {
           ))}
         </tbody>
       </table>
-      <p>
-        <strong>Средняя длина кодов:</strong> {averageCodeLength.toFixed(4)} бит
-      </p>
-      <EncoderDecoder codes={codes}></EncoderDecoder>
+      <div className="Info">
+        <p>
+          <strong>Средняя длина кодов:</strong> <span>{averageCodeLength.toFixed(4)} бит</span>
+        </p>
+        <p>
+          <strong>Энтропия:</strong> <span>{entropy.toFixed(4)} бит</span>
+        </p>
+      </div>
+      <EncoderDecoder codes={codes} Name={"Хаффмана"}></EncoderDecoder>
     </div>
   );
 };
