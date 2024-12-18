@@ -51,13 +51,14 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: ease-in-out 0.25s;
 }
 .WrapButton{
   display: flex;
   gap: 1rem;
 }
 button:hover {
+  scale: 1.05;
   border-color: #646cff;
 }
 button:focus,
@@ -70,12 +71,16 @@ tr:hover {
   background: #1a1a1a;
 }
 .Info {
+  transition: ease-in-out 0.2s;
   width: fit-content;
   display: flex;
   flex-direction: column;
   padding: 1rem;
   background: #1a1a1a;
   border-radius: 20px;
+}
+.Info:hover{
+  scale: 1.08;
 }
 .InfoNums {
   font-weight: bold;

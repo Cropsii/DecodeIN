@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
-import { Button, TextField, Box } from "@mui/material"; // Импортируем Button и другие компоненты из Material UI
-import Labwork2 from "./LabWork2";
+import { Button, TextField, Box } from "@mui/material";
+import ShannonFanoCoding from "./ShannonFanoCoding";
 
 const Labwork1 = () => {
   const [text, setText] = useState("");
   const [table, setTable] = useState(null);
   const [totalSymbols, setTotalSymbols] = useState(0);
   const [entropyValue, setEntropyValue] = useState(0);
-
+  const symbols = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789.,:;- (";
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -72,26 +72,22 @@ const Labwork1 = () => {
     XLSX.writeFile(wb, "lab_work_1_table.xlsx");
   };
 
-  // Вторичная таблица (ASCII и Хартли)
-  const asciiBits = 8;
-  const hartleyBits = Math.log2(totalSymbols || 1);
-  const asciiAbsoluteRedundancy = asciiBits - entropyValue;
-  const hartleyAbsoluteRedundancy = hartleyBits - entropyValue;
-
   const secondTableData = [
     {
       type: "Стандартный код ASCII",
-      uncertainty: asciiBits,
-      codeLength: asciiBits,
-      absoluteRedundancy: asciiAbsoluteRedundancy,
-      relativeRedundancy: asciiAbsoluteRedundancy / asciiBits,
+      uncertainty: 8,
+      codeLength: 8,
+      absoluteRedundancy: 8 - entropyValue,
+      relativeRedundancy: (8 - entropyValue) / 8,
     },
     {
       type: "Код по Хартли",
-      uncertainty: hartleyBits,
-      codeLength: hartleyBits,
-      absoluteRedundancy: hartleyAbsoluteRedundancy,
-      relativeRedundancy: hartleyAbsoluteRedundancy / hartleyBits,
+      uncertainty: Math.log2(symbols.length),
+      codeLength: Math.ceil(Math.log2(symbols.length)),
+      absoluteRedundancy: Math.ceil(Math.log2(symbols.length)) - entropyValue,
+      relativeRedundancy:
+        (Math.ceil(Math.log2(symbols.length)) - entropyValue) /
+        Math.ceil(Math.log2(symbols.length)),
     },
   ];
 
@@ -101,7 +97,6 @@ const Labwork1 = () => {
       <div className="WrapButton">
         <div className="file-input-wrapper">
           <Box>
-            {/* Используем TextField для стилизации input */}
             <TextField
               variant="outlined"
               type="file"
@@ -113,8 +108,6 @@ const Labwork1 = () => {
             />
           </Box>
         </div>
-
-        {/* Кнопка с использованием Material UI */}
         <Button variant="contained" color="primary" onClick={calculateTable}>
           Сгенерировать таблицу
         </Button>
@@ -142,7 +135,7 @@ const Labwork1 = () => {
                   <td>{row.symbol}</td>
                   <td>{row.code}</td>
                   <td>{row.count}</td>
-                  <td>{row.probability.toFixed(4)}</td>
+                  <td>{row.probability.toFixed(8)}</td>
                   <td>{row.ii.toFixed(4)}</td>
                 </tr>
               ))}
@@ -153,7 +146,8 @@ const Labwork1 = () => {
               <strong>Всего символов:</strong> <span>{totalSymbols}</span>
             </p>
             <p>
-              <strong>Энтропия источника:</strong> <span>{entropyValue}</span>
+              <strong>Энтропия источника:</strong>{" "}
+              <span>{entropyValue.toFixed(4)}</span>
             </p>
           </div>
 
@@ -172,14 +166,15 @@ const Labwork1 = () => {
               {secondTableData.map((row, index) => (
                 <tr key={index}>
                   <td>{row.type}</td>
-                  <td>{row.uncertainty.toFixed(4)}</td>
-                  <td>{row.codeLength.toFixed(4)}</td>
-                  <td>{row.absoluteRedundancy.toFixed(4)}</td>
-                  <td>{row.relativeRedundancy.toFixed(4)}</td>
+                  <td>{row.uncertainty}</td>
+                  <td>{row.codeLength}</td>
+                  <td>{row.absoluteRedundancy.toFixed(6)}</td>
+                  <td>{row.relativeRedundancy.toFixed(6)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <ShannonFanoCoding initialTable={table} />
         </>
       )}
     </main>
