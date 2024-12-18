@@ -102,6 +102,7 @@ const Labwork1 = () => {
               type="file"
               onChange={handleFileChange}
               sx={{
+                width:"fit-content",
                 backgroundColor: "#ffff",
                 borderRadius: "10px",
               }}

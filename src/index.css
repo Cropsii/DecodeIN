@@ -25,6 +25,7 @@ a:hover {
 
 body {
   display: flex;
+  align-items: center;
   flex-direction: column;
   margin: 0;
   min-width: 320px;
@@ -143,6 +144,21 @@ span{
   font-size: larger;
   font-weight: bolder;
   color: #747bff;
+}
+.DecodeWrap{
+  background: #1a1a1a66;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.encodedText{
+  background: #372652;
+  padding: 1rem;
+  width: fit-content;
+  border-radius: 10px;
 }
 @media (prefers-color-scheme: light) {
   :root {

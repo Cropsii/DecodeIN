@@ -1,4 +1,5 @@
 import React from "react";
+import EncoderDecoder from "./EncoderDecoder";
 
 const ShannonFanoCoding = ({ initialTable }) => {
   // Сортируем символы по вероятности (по убыванию)
@@ -14,8 +15,10 @@ const ShannonFanoCoding = ({ initialTable }) => {
     }
 
     // Суммируем вероятности
-    const totalProbability = symbols.reduce((sum, item) => sum + item.probability, 0);
-
+    const totalProbability = symbols.reduce(
+      (sum, item) => sum + item.probability,
+      0
+    );
     // Ищем точку разделения с минимальной разницей вероятностей
     let splitIndex = 0;
     let leftSum = 0;
@@ -46,6 +49,7 @@ const ShannonFanoCoding = ({ initialTable }) => {
 
   // Генерируем коды
   const codes = assignCodes(sortedTable);
+  console.log(sortedTable);
 
   return (
     <div>
@@ -70,6 +74,7 @@ const ShannonFanoCoding = ({ initialTable }) => {
           ))}
         </tbody>
       </table>
+      <EncoderDecoder codes={codes}></EncoderDecoder>
     </div>
   );
 };
