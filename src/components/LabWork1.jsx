@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
-import "./labwork1.css"; // Импорт стилей
 import { Button, TextField, Box } from "@mui/material"; // Импортируем Button и другие компоненты из Material UI
+import Labwork2 from "./LabWork2";
 
 const Labwork1 = () => {
   const [text, setText] = useState("");
@@ -98,29 +98,30 @@ const Labwork1 = () => {
   return (
     <main>
       <h1>Лабораторная работа №1</h1>
-      <div className="file-input-wrapper">
-        <Box>
-          {/* Используем TextField для стилизации input */}
-          <TextField
-            variant="outlined"
-            type="file"
-            onChange={handleFileChange}
-            sx={{
-              backgroundColor: "#ffff",
-              borderRadius: "10px",
-            }}
-          />
-        </Box>
+      <div className="WrapButton">
+        <div className="file-input-wrapper">
+          <Box>
+            {/* Используем TextField для стилизации input */}
+            <TextField
+              variant="outlined"
+              type="file"
+              onChange={handleFileChange}
+              sx={{
+                backgroundColor: "#ffff",
+                borderRadius: "10px",
+              }}
+            />
+          </Box>
+        </div>
+
+        {/* Кнопка с использованием Material UI */}
+        <Button variant="contained" color="primary" onClick={calculateTable}>
+          Сгенерировать таблицу
+        </Button>
+        <Button variant="contained" color="secondary" onClick={handleSaveTable}>
+          Сохранить таблицу
+        </Button>
       </div>
-
-      {/* Кнопка с использованием Material UI */}
-      <Button variant="contained" color="primary" onClick={calculateTable}>
-        Сгенерировать таблицу
-      </Button>
-      <Button variant="contained" color="secondary" onClick={handleSaveTable}>
-        Сохранить таблицу
-      </Button>
-
       {table && (
         <>
           <table>
@@ -149,10 +150,10 @@ const Labwork1 = () => {
           </table>
           <div className="Info">
             <p>
-              <strong>Всего символов:</strong> {totalSymbols}
+              <strong>Всего символов:</strong> <span>{totalSymbols}</span>
             </p>
             <p>
-              <strong>Энтропия источника:</strong> {entropyValue.toFixed(4)}
+              <strong>Энтропия источника:</strong> <span>{entropyValue}</span>
             </p>
           </div>
 
