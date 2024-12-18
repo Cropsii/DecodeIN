@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import { Button, TextField, Box } from "@mui/material";
 import ShannonFanoCoding from "./ShannonFanoCoding";
+import HuffmanCoding from "./HuffmanCoding";
 
 const Labwork1 = () => {
   const [text, setText] = useState("");
@@ -93,7 +94,7 @@ const Labwork1 = () => {
 
   return (
     <main>
-      <h1>Лабораторная работа №1</h1>
+      <h1>Лабораторная работа №7</h1>
       <div className="WrapButton">
         <div className="file-input-wrapper">
           <Box>
@@ -176,6 +177,7 @@ const Labwork1 = () => {
             </tbody>
           </table>
           <ShannonFanoCoding initialTable={table} />
+          <HuffmanCoding initialTable={table}></HuffmanCoding>
         </>
       )}
     </main>

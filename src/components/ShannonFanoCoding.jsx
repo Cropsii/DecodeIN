@@ -51,6 +51,13 @@ const ShannonFanoCoding = ({ initialTable }) => {
   const codes = assignCodes(sortedTable);
   console.log(sortedTable);
 
+  const calculateAverageCodeLength = (symbols, codes) => {
+    return symbols.reduce(
+      (sum, symbol) => sum + codes[symbol.symbol].length * symbol.probability,
+      0
+    );
+  };
+  const averageCodeLength = calculateAverageCodeLength(sortedTable, codes);
   return (
     <div className="ShanonFanoWrap">
       <h2>Кодирование Шеннона-Фано</h2>
@@ -74,6 +81,9 @@ const ShannonFanoCoding = ({ initialTable }) => {
           ))}
         </tbody>
       </table>
+      <p>
+        <strong>Средняя длина кодов:</strong> {averageCodeLength.toFixed(4)} бит
+      </p>
       <EncoderDecoder codes={codes}></EncoderDecoder>
     </div>
   );

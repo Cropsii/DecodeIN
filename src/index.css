@@ -145,7 +145,7 @@ span {
   font-weight: bolder;
   color: #747bff;
 }
-.ShanonFanoWrap {
+.ShanonFanoWrap ,.HuffmanWrap {
   display: flex;
   flex-direction: column;
   gap: 1rem;
