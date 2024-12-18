@@ -1,8 +1,10 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# Лабораторная работа №7: Оценка количества информации в сообщении и эффективное кодирование
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Описание проекта
+
+Данный проект представляет собой реализацию лабораторной работы №7, направленной на практическое освоение методов оценки количества информации в сообщении и эффективного кодирования с использованием алгоритмов Шеннона-Фано и Хаффмана. Проект разработан с использованием React.
+
+## Использование
+В интерфейсе приложения вы можете ввести исходные данные для анализа, после чего будут рассчитаны количество информации в сообщении и представлены результаты кодирования с использованием алгоритмов Шеннона-Фано и Хаффмана.
