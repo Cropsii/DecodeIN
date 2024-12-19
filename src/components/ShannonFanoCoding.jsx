@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import EncoderDecoder from "./EncoderDecoder";
 
-const ShannonFanoCoding = ({ initialTable }) => {
+const ShannonFanoCoding = ({ initialTable, entropyValue }) => {
   // Сортируем символы по вероятности (по убыванию)
   const sortedTable = [...initialTable].sort(
     (a, b) => b.probability - a.probability
@@ -59,16 +59,7 @@ const ShannonFanoCoding = ({ initialTable }) => {
     );
   };
 
-  // Функция для расчета энтропии
-  const calculateEntropy = (symbols) => {
-    return symbols.reduce(
-      (sum, symbol) => sum - symbol.probability * Math.log2(symbol.probability),
-      0
-    );
-  };
-
   const averageCodeLength = calculateAverageCodeLength(sortedTable, codes);
-  const entropy = calculateEntropy(sortedTable);
 
   return (
     <div className="ShanonFanoWrap">
@@ -95,10 +86,11 @@ const ShannonFanoCoding = ({ initialTable }) => {
       </table>
       <div className="Info">
         <p>
-          <strong>Средняя длина кодов:</strong> <span>{averageCodeLength.toFixed(4)} бит</span>
+          <strong>Средняя длина кодов:</strong>{" "}
+          <span>{averageCodeLength.toFixed(4)} бит</span>
         </p>
         <p>
-          <strong>Энтропия:</strong> <span>{entropy.toFixed(4)} бит</span>
+          <strong>Энтропия:</strong> <span>{entropyValue.toFixed(4)} бит</span>
         </p>
       </div>
       <EncoderDecoder codes={codes} Name={"Шеннона-Фано"}></EncoderDecoder>

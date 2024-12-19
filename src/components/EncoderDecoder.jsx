@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const EncoderDecoder = ({ codes,Name }) => {
+const EncoderDecoder = ({ codes, Name }) => {
   const [inputText, setInputText] = useState("");
   const [decodeInput, setDecodeInput] = useState("");
   const [decodedText, setDecodedText] = useState("");
@@ -39,14 +39,7 @@ const EncoderDecoder = ({ codes,Name }) => {
   };
 
   const copyToClipboard = (text) => {
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        console.log("Текст скопирован в буфер обмена!");
-      })
-      .catch((error) => {
-        console.error("Ошибка копирования текста:", error);
-      });
+    navigator.clipboard.writeText(text);
   };
 
   return (

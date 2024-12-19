@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import EncoderDecoder from "./EncoderDecoder";
 
-const HuffmanCoding = ({ initialTable }) => {
+const HuffmanCoding = ({ initialTable, entropyValue }) => {
   // Сортируем символы по вероятности (по убыванию)
   const sortedTable = [...initialTable].sort(
     (a, b) => b.probability - a.probability
@@ -56,20 +56,13 @@ const HuffmanCoding = ({ initialTable }) => {
       0
     );
   };
-  // Функция для расчета энтропии
-  const calculateEntropy = (symbols) => {
-    return symbols.reduce(
-      (sum, symbol) => sum - symbol.probability * Math.log2(symbol.probability),
-      0
-    );
-  };
-  const entropy = calculateEntropy(sortedTable);
 
   // Построение дерева и генерация кодов
   const huffmanTree = buildTree(sortedTable);
   const codes = generateCodes(huffmanTree);
   const averageCodeLength = calculateAverageCodeLength(sortedTable, codes);
   console.log(codes);
+
   return (
     <div className="HuffmanWrap">
       <h2>Кодирование Хаффмана</h2>
@@ -95,10 +88,11 @@ const HuffmanCoding = ({ initialTable }) => {
       </table>
       <div className="Info">
         <p>
-          <strong>Средняя длина кодов:</strong> <span>{averageCodeLength.toFixed(4)} бит</span>
+          <strong>Средняя длина кодов:</strong>{" "}
+          <span>{averageCodeLength.toFixed(4)} бит</span>
         </p>
         <p>
-          <strong>Энтропия:</strong> <span>{entropy.toFixed(4)} бит</span>
+          <strong>Энтропия:</strong> <span>{entropyValue.toFixed(4)} бит</span>
         </p>
       </div>
       <EncoderDecoder codes={codes} Name={"Хаффмана"}></EncoderDecoder>
