@@ -40,8 +40,8 @@ const ShannonFanoCoding = ({ initialTable }) => {
     const rightGroup = symbols.slice(splitIndex + 1);
 
     // Рекурсивно генерируем коды для обеих групп
-    const leftCodes = assignCodes(leftGroup, code + "0");
-    const rightCodes = assignCodes(rightGroup, code + "1");
+    const leftCodes = assignCodes(leftGroup, code + "1");
+    const rightCodes = assignCodes(rightGroup, code + "0");
 
     // Объединяем результаты
     return { ...leftCodes, ...rightCodes };
