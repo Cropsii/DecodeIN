@@ -5,10 +5,12 @@ import ShannonFanoCoding from "./ShannonFanoCoding";
 import HuffmanCoding from "./HuffmanCoding";
 
 const Labwork1 = () => {
+  // Хранение переменных
   const [text, setText] = useState("");
   const [table, setTable] = useState(null);
   const [totalSymbols, setTotalSymbols] = useState(0);
   const [entropyValue, setEntropyValue] = useState(0);
+
   const symbols = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789.,:;- (";
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -26,10 +28,8 @@ const Labwork1 = () => {
     }
 
     const lowerCaseText = text.toLowerCase();
-    const symbols = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789.,:;- (".split(
-      ""
-    );
-    const symbolCounts = symbols.reduce((acc, symbol) => {
+    const symbolArray = symbols.split("");
+    const symbolCounts = symbolArray.reduce((acc, symbol) => {
       const count = lowerCaseText.split(symbol).length - 1;
       acc.push({ symbol, count });
       return acc;
@@ -73,7 +73,7 @@ const Labwork1 = () => {
     XLSX.writeFile(wb, "lab_work_1_table.xlsx");
   };
 
-  const secondTableData = [
+  const compaitTable = [
     {
       type: "Стандартный код ASCII",
       uncertainty: 8,
@@ -165,7 +165,7 @@ const Labwork1 = () => {
               </tr>
             </thead>
             <tbody>
-              {secondTableData.map((row, index) => (
+              {compaitTable.map((row, index) => (
                 <tr key={index}>
                   <td>{row.type}</td>
                   <td>{row.uncertainty}</td>
@@ -177,8 +177,14 @@ const Labwork1 = () => {
             </tbody>
           </table>
           <div className="TableWrap">
-            <ShannonFanoCoding initialTable={table} />
-            <HuffmanCoding initialTable={table}></HuffmanCoding>
+            <ShannonFanoCoding
+              initialTable={table}
+              entropyValue={entropyValue}
+            />
+            <HuffmanCoding
+              initialTable={table}
+              entropyValue={entropyValue}
+            ></HuffmanCoding>
           </div>
         </>
       )}
