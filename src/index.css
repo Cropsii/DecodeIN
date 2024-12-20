@@ -1,208 +1,273 @@
-/* labwork1.css */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #292929;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #1a1a1a;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Mobile-first подход */
 body {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   margin: 0;
+  padding: 10px;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
 }
+
 main {
-  margin: 20px;
+  padding: 10px;
   display: flex;
   gap: 1rem;
   flex-direction: column;
 }
+
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 1.8em;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+h2 {
+  font-size: 1.4em;
+  text-align: center;
+  color: #747bff;
+}
+span {
+  font-weight: bolder;
+  color: #747bff;
+}
+/* Кнопки */
+.WrapButton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 10px;
 }
 
 button {
-  /* width: fit-content; */
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  width: 100%;
+  padding: 12px;
   font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: ease-in-out 0.25s;
-}
-.WrapButton {
-  display: flex;
-  gap: 1rem;
-}
-button:hover {
-  scale: 1.05;
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-tr:hover {
-  opacity: 90%;
-  background: #1a1a1a;
-}
-.Info {
-  transition: ease-in-out 0.2s;
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  background: #1a1a1a;
-  border-radius: 20px;
-}
-.Info:hover {
-  scale: 1.08;
-}
-.InfoNums {
-  font-weight: bold;
-  font-size: larger;
-  color: #747bff;
-}
-
-.file-input-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.file-input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
-.file-input-label {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  color: white;
-  background-color: #007bff;
+  border-radius: 8px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  background: #747bff;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.file-input-label:hover {
-  background-color: #0056b3;
-}
-
+/* Таблицы */
 table {
   width: 100%;
-  border-collapse: collapse;
-}
-
-table,
-th,
-td {
-  border: 1px solid black;
+  font-size: 0.9em;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 th,
 td {
   padding: 8px;
   text-align: left;
+  min-width: 100px;
 }
 
 th {
-  background-color: #372652;
-}
-span {
-  font-size: larger;
-  font-weight: bolder;
-  color: #747bff;
-}
-.ShanonFanoWrap ,.HuffmanWrap {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 1rem;
+  background-color: #747bff;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
-.ChoseTable{
-  display: flex;
-  justify-content: space-between;
+/* Информационные блоки */
+.Info {
+  padding: 15px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  margin: 10px 0;
 }
-.TableWrap{
+
+.TableWrap {
   display: flex;
-  justify-content: space-between;
-  text-align: center;
+  flex-direction: column;
+  gap: 1.5rem;
 }
+
+.ShanonFanoWrap,
+.HuffmanWrap {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Кодер/Декодер */
 .DecodeWrap {
   display: flex;
   flex-direction: column;
-  max-width: 600px;
   gap: 1rem;
-  margin: auto;
-  padding: 1rem;
-  background: #1a1a1a3e;
+  padding: 15px;
   border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.DecodeWrap input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  margin: 5px 0;
+  box-sizing: border-box;
 }
 
 .encodedInput {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: pre-wrap;
+  word-break: break-all;
+  white-space: normal;
+  background: rgba(116, 123, 255, 0.1);
   padding: 10px;
-  border-radius: 5px;
-  background: #37265295;
+  border-radius: 6px;
+  font-size: 0.9em;
 }
 
-.encodedText {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+/* File input styling */
+.file-input-wrapper {
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-.encodedText:hover {
-  background-color: #0056b3;
+/* Стили для больших экранов */
+@media (min-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2.5em;
+  }
+
+  .WrapButton {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  button {
+    width: auto;
+  }
+
+  .TableWrap {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .ShanonFanoWrap,
+  .HuffmanWrap {
+    width: 48%;
+  }
+
+  table {
+    display: table;
+    white-space: normal;
+  }
 }
 
+/* Улучшения для удобства использования */
+button:active {
+  transform: scale(0.98);
+}
+
+input:focus {
+  outline: 2px solid #747bff;
+}
+
+/* Анимации для интерактивных элементов */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.DecodeWrap,
+.Info {
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* Улучшения для тёмного режима */
+@media (prefers-color-scheme: dark) {
+  input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  button:hover {
+    background: #535bf2;
+  }
+}
+
+/* Улучшения для светлого режима */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
-  a:hover {
-    color: #747bff;
+
+  body {
+    background: #f0f0f0;
   }
+
+  .Info,
+  .DecodeWrap {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  input[type="text"] {
+    background: #f0f0f0;
+    color: #213547;
+  }
+}
+
+/* Улучшения для очень маленьких экранов */
+@media (max-width: 320px) {
+  h1 {
+    font-size: 1.5em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  table {
+    font-size: 0.8em;
+  }
+
+  .Info {
+    font-size: 0.9em;
+  }
+}
+
+/* Стили для улучшения читаемости на средних экранах */
+@media (min-width: 321px) and (max-width: 767px) {
+  table {
+    font-size: 0.95em;
+  }
+
+  .Info {
+    margin: 15px 0;
+  }
+
   button {
-    background-color: #f9f9f9;
+    margin: 5px 0;
   }
 }

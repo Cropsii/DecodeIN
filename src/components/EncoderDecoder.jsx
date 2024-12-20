@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 
+// Компонент для кодирования и декодирования сообщений
 const EncoderDecoder = ({ codes, Name }) => {
+  // Состояния для хранения введенного текста, закодированного текста и декодированного текста
   const [inputText, setInputText] = useState("");
   const [decodeInput, setDecodeInput] = useState("");
   const [decodedText, setDecodedText] = useState("");
 
   // Функция для кодирования текста
+  // Принимает сообщение и возвращает закодированную строку
   const encodeMessage = (message) => {
     return message
       .split("")
@@ -14,6 +17,7 @@ const EncoderDecoder = ({ codes, Name }) => {
   };
 
   // Функция для декодирования текста
+  // Принимает бинарную строку и возвращает декодированное сообщение
   const decodeMessage = (binary) => {
     let currentCode = "";
     let decoded = "";
@@ -23,6 +27,7 @@ const EncoderDecoder = ({ codes, Name }) => {
       Object.entries(codes).map(([key, value]) => [value, key])
     );
 
+    // Проходим по каждому биту и собираем коды символов
     for (let bit of binary) {
       currentCode += bit;
       if (reverseCodes[currentCode]) {
@@ -34,10 +39,12 @@ const EncoderDecoder = ({ codes, Name }) => {
     return decoded;
   };
 
+  // Обработчик кнопки декодирования
   const handleDecode = () => {
     setDecodedText(decodeMessage(decodeInput));
   };
 
+  // Функция для копирования текста в буфер обмена
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
   };
@@ -46,6 +53,7 @@ const EncoderDecoder = ({ codes, Name }) => {
     <div className="DecodeWrap">
       <h2>Кодирование {Name}</h2>
 
+      {/* Секция кодирования */}
       <div>
         <label>Введите текст для кодирования: </label>
         <input
@@ -63,6 +71,7 @@ const EncoderDecoder = ({ codes, Name }) => {
         Скопировать 📄
       </button>
 
+      {/* Секция декодирования */}
       <div>
         <label>Введите текст для декодирования: </label>
         <input
@@ -74,6 +83,7 @@ const EncoderDecoder = ({ codes, Name }) => {
       </div>
       <button onClick={handleDecode}>Декодировать 🪄</button>
 
+      {/* Отображение декодированного сообщения */}
       {decodedText && (
         <div>
           <h3>Декодированное сообщение:</h3>
