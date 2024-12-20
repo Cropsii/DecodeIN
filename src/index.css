@@ -81,7 +81,7 @@ th {
   top: 0;
   z-index: 1;
 }
-tr:hover{
+tr:hover {
   background: #ffffff0c;
 }
 /* Информационные блоки */
@@ -220,24 +220,29 @@ input:focus {
 /* Улучшения для светлого режима */
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #000000;
     background-color: #ffffff;
   }
 
-  body {
-    background: #f0f0f0;
+  tr:hover {
+    background: #0000000c;
   }
-
+  tr {
+    background: #ffffff;
+  }
+  body {
+    background: #e8e8e8;
+  }
+  .DecodeWrap input[type="text"]{
+    color: #000000;
+    background: rgba(116, 123, 255, 0.1);
+  }
   .Info,
   .DecodeWrap {
     background: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
-
-  input[type="text"] {
-    background: #f0f0f0;
-    color: #213547;
-  }
+  
 }
 
 /* Улучшения для очень маленьких экранов */
