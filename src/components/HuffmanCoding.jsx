@@ -80,7 +80,7 @@ const HuffmanCoding = ({ initialTable, entropyValue }) => {
             <tr key={index}>
               <td>{row.symbol}</td>
               <td>{row.probability.toFixed(8)}</td>
-              <td>{codes[row.symbol]}</td>
+              <td style={{textAlign:"center"}}>{codes[row.symbol]}</td>
               <td>{codes[row.symbol].length}</td>
             </tr>
           ))}

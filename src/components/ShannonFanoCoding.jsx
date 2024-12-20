@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import EncoderDecoder from "./EncoderDecoder";
+import { Switch } from "@mui/material";
 
 const ShannonFanoCoding = ({ initialTable, entropyValue }) => {
+  const [invertCodes, setInvertCodes] = useState(false);
+
   // Сортируем символы по вероятности (по убыванию)
   const sortedTable = [...initialTable].sort(
     (a, b) => b.probability - a.probability
@@ -40,8 +43,8 @@ const ShannonFanoCoding = ({ initialTable, entropyValue }) => {
     const rightGroup = symbols.slice(splitIndex + 1);
 
     // Рекурсивно генерируем коды для обеих групп
-    const leftCodes = assignCodes(leftGroup, code + "1");
-    const rightCodes = assignCodes(rightGroup, code + "0");
+    const leftCodes = assignCodes(leftGroup, code + (invertCodes ? "0" : "1"));
+    const rightCodes = assignCodes(rightGroup, code + (invertCodes ? "1" : "0"));
 
     // Объединяем результаты
     return { ...leftCodes, ...rightCodes };
@@ -61,9 +64,21 @@ const ShannonFanoCoding = ({ initialTable, entropyValue }) => {
 
   const averageCodeLength = calculateAverageCodeLength(sortedTable, codes);
 
+  const handleSwitchChange = () => {
+    setInvertCodes(!invertCodes);
+  };
+
   return (
     <div className="ShanonFanoWrap">
-      <h2>Кодирование Шеннона-Фано</h2>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h2>Кодирование Шеннона-Фано</h2>
+        <Switch
+          defaultChecked
+          color="secondary"
+          checked={invertCodes}
+          onChange={handleSwitchChange}
+        />
+      </div>
       <table>
         <thead>
           <tr>
@@ -78,7 +93,7 @@ const ShannonFanoCoding = ({ initialTable, entropyValue }) => {
             <tr key={index}>
               <td>{row.symbol}</td>
               <td>{row.probability.toFixed(8)}</td>
-              <td>{codes[row.symbol]}</td>
+              <td style={{textAlign:"center"}}>{codes[row.symbol]}</td>
               <td>{codes[row.symbol].length}</td>
             </tr>
           ))}
